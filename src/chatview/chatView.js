@@ -3,18 +3,24 @@ import styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
 
 class ChatViewComponent extends React.Component {
+    componentDidMount = () =>{
+        const container = document.getElementById('chatview-container');
+        if(container)
+        container.scrollTo(0,container.scrollHeight)
+    }
   render() {
     const { classes, chat,user } = this.props;
 
     if (chat === undefined) {
-      return <main className={classes.content}>誰とチャットしたいの？</main>;
+      return (
+        <main id='chatview-container' className={classes.content}>誰とチャットしたいの？</main>)
     } else {
         return (
         <div>
             <div className={classes.chatHeader}>
                 あなたは{chat.users.filter(_user => _user !== user)[0]}と会話中です
             </div>
-            <main className={classes.content}>
+            <main id='chatview-container' className={classes.content}>
                 {
                     chat.messages.map((_msg,_index) =>{
                         return(
