@@ -16,6 +16,7 @@ class ChatListaComponent extends React.Component {
   render() {
     const { classes } = this.props;
     if (this.props.chats.length > 0) {
+      console.log(this.props.chats.length)
       return (
         <main className={classes.root}>
           <Button
@@ -42,7 +43,7 @@ class ChatListaComponent extends React.Component {
                         {
                           _chat.users
                             .filter(_user => _user !== this.props.userEmail)[0]
-                            .split("")[1]
+                            .split("")[0]
                         }
                       </Avatar>
                     </ListItemAvatar>
@@ -54,10 +55,15 @@ class ChatListaComponent extends React.Component {
                       }
                       secondary={
                         <Typography component="span" color="textPrimary">
-                          {_chat.messages[
+                         { 
+                           _chat.messages === undefined ?
+                           null:
+                           _chat.messages[
                             _chat.messages.length - 1
-                          ].message.substring(0, 30)}
+                          ].message.substring(0, 30)
+                        }
                         </Typography>
+                    
                       }
                     ></ListItemText>
                   </ListItem>

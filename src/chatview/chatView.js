@@ -1,4 +1,3 @@
-  
 import React from 'react';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
@@ -48,4 +47,3 @@ class ChatViewComponent extends React.Component {
 }
 
 export default withStyles(styles)(ChatViewComponent);
-
