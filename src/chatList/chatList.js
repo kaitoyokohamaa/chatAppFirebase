@@ -15,8 +15,14 @@ import NotificationImportant from "@material-ui/icons/NotificationImportant";
 class ChatListaComponent extends React.Component {
   render() {
     const { classes } = this.props;
-    if (this.props.chats.length > 0) {
+    console.log(this.props.chats)
+    if (this.props.chats.length === 0 && this.props.chats === []) {
       console.log(this.props.chats.length)
+      return(
+        <div>Loafding</div>
+      )
+    }else　if(this.props.chats.length > 0){
+      console.log(this.props.chats)
       return (
         <main className={classes.root}>
           <Button
@@ -63,9 +69,9 @@ class ChatListaComponent extends React.Component {
                           ].message.substring(0, 30)
                         }
                         </Typography>
-                    
                       }
-                    ></ListItemText>
+                    >
+                    </ListItemText>
                   </ListItem>
                   <Divider></Divider>
                 </div>
@@ -75,22 +81,23 @@ class ChatListaComponent extends React.Component {
         </main>
       );
     }else{
-        return(
-            <main className={classes.root}>
-                <Button variant='contained'
-                    fullWidth
-                    color='primary'
-                    onClick={this.newChat}
-                    className={classes.newChatBtn}>
-                        おニューなメッセージ
-                    </Button>
-                    <List></List>
-            </main>
-        )
+      return(
+        <main className={classes.root}>
+            <Button variant='contained'
+                fullWidth
+                color='primary'
+                onClick={this.newChat}
+                className={classes.newChatBtn}>
+                    おニューなメッセージ
+                </Button>
+                <List></List>
+        </main>
+    )
     }
   }
+  // userIsSender = (chat) => chat.messages[chat.messages.length - 1].sender === this.props.userEmail;
   newChat = () => {
-    console.log("new chat click");
+   this.props.newChatBtnFn()
   };
   selectChat = index => {
     this.props.selectChatFn(index)

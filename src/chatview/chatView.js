@@ -18,10 +18,10 @@ class ChatViewComponent extends React.Component {
   render() {
 
     const { classes } = this.props;
-
+    
     if(this.props.chat === undefined) {
-      return(<main className={classes.content}></main>);
-    } else if(this.props.chat !== undefined) {
+      return(<main className={classes.content}>ここは僕のおごりで！</main>);
+    } else if(this.props.chat !== undefined && this.props.chat.messages !==undefined) {
       return(
         <div>
           <div className={classes.chatHeader}>
