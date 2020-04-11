@@ -4,6 +4,7 @@ import { Button, withStyles } from "@material-ui/core";
 import styles from "./style";
 import ChatViewComponent from '../chatview/chatView'
 import ChatTextBox from '../chattextbox/chattextbox'
+import NewChatComponent from '../newChat/newChat'
 const firebase = require("firebase");
 class DashbordComponent extends React.Component {
   constructor() {
@@ -40,16 +41,21 @@ class DashbordComponent extends React.Component {
           this.state.selectChat !== null && !this.state.newChatFormVisible?
           <ChatTextBox submitMessageFn={this.submitMessage}/>:null
         }
+        {
+          this.state.newChatFormVisible ? <NewChatComponent goToChatFn={this.goToChat} newChatSubmitFn={this.newChatSubmit}></NewChatComponent>:null
+        }
+
         <Button className={classes.signOutBtn} onClick={this.signOut}>
           Sign Out
         </Button>
       </div>
     );
   }
+
   signOut= () =>firebase.auth().signOut();
 
   selectChat = chatIndex => {
-    this.setState({selectChat:chatIndex})
+    this.setState({selectChat:chatIndex ,newChatFormVisible:false})
     console.log({selectChat:chatIndex},chatIndex)
   };
 
@@ -73,10 +79,38 @@ class DashbordComponent extends React.Component {
         receiverHasRead: false
       });
   }
+
+  goToChat = async (docKey, msg) =>{
+    const usersInChat = docKey.split(':')
+    const chat = this.state.chats.find(_chat => usersInChat.every(_user =>_chat.users.includes(_user)));
+    this.setState({newChatFormVisible:false})
+    await this.selectChat(this.state.chats.indexOf(chat));
+    this.submitMessage(msg)
+  }
+
   buildDocKey = (friend) =>[friend,this.state.email].sort().join(':')
 
   newChatBtnClicked = () =>
     this.setState({ newChatFormVisible: true, selectChat: null });
+
+    newChatSubmit = async (chatObj) =>{
+      const docKey = this.buildDocKey(chatObj.sendTo);
+      await 
+      firebase
+       .firestore()
+       .collection('chats')
+       .doc(docKey)
+       .set({
+         messages:[{
+           message:chatObj.message,
+           sender:this.state.email
+         }],
+         users:[this.state.email, chatObj.sendTo],
+         receiverHasRead :false
+       })
+       this.setState({newChatFormVisible:false});
+       this.selectChat(this.state.chats.length - 1)
+    }
 
     componentWillMount = () => {
       firebase.auth().onAuthStateChanged(async _usr => {
