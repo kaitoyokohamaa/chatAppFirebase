@@ -32,7 +32,7 @@ class ChatListaComponent extends React.Component {
             className={classes.newChatBtn}
             onClick={this.newChat}
           >
-              New Message
+              新しいメッセージ
           </Button>
           <List>
             {this.props.chats.map((_chat, _index) => {

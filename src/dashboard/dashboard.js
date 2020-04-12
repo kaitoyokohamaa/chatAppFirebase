@@ -66,7 +66,9 @@ class DashbordComponent extends React.Component {
     const docKey = this.buildDocKey(this.state.chats[this.state.selectChat]
       .users
       .filter(_usr => _usr !== this.state.email)[0])
-      console.log(docKey)
+      console.log(this.state.chats)
+        console.log(docKey) 
+         console.log(2223)
     firebase
       .firestore()
       .collection('chats')
@@ -114,8 +116,8 @@ class DashbordComponent extends React.Component {
 
     componentWillMount = () => {
       firebase.auth().onAuthStateChanged(async _usr => {
-        if(!_usr)
-          this.props.history.push('/login');
+　　　　　　　if(!_usr)
+                this.props.history.push('/login');
         else {
           await firebase
             .firestore()

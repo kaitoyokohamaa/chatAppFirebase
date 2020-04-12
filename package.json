@@ -1,6 +1,7 @@
 {
   "name": "chat",
   "version": "0.1.0",
+  "homepage": "https://eishis.github.io/chatAppFirebase",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.9",
@@ -19,7 +20,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "deploy": "npm run build && gh-pages -d build",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -36,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }
